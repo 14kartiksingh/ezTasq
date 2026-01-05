@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ezTasq - Academic Support & File Services</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+            background: #ffffff;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: #ffffff;
+            padding: 15px 0;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        nav {
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #666666;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #2563eb;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            cursor: pointer;
+            gap: 5px;
+        }
+
+        .hamburger span {
+            width: 25px;
+            height: 3px;
+            background: #666666;
+            border-radius: 2px;
+            transition: all 0.3s;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: rotate(45deg) translate(8px, 8px);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: rotate(-45deg) translate(7px, -7px);
+        }
+
+        .hero {
+            padding: 80px 0;
+            text-align: center;
+            background: #f8f9fa;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 15px;
+            color: #2563eb;
+            font-weight: 800;
+        }
+
+        .hero-subtitle {
+            font-size: 18px;
+            color: #666666;
+            margin-bottom: 20px;
+        }
+
+        .hero-desc {
+            font-size: 15px;
+            color: #666666;
+            max-width: 600px;
+            margin: 0 auto 30px;
+        }
+
+        .cta-button {
+            background: #2563eb;
+            color: white;
+            padding: 12px 40px;
+            text-decoration: none;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .services-section {
+            padding: 80px 0;
+            background: #ffffff;
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 50px;
+            color: #333333;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        .service-category {
+            background: #f8f9fa;
+            border: 1px solid #e0e0e0;
+            padding: 25px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .service-category:hover {
+            background: #f0f4ff;
+            border-color: #2563eb;
+        }
+
+        .service-category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .service-category-header h2 {
+            color: #333333;
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .service-toggle {
+            color: #2563eb;
+            font-size: 18px;
+            transition: transform 0.3s;
+        }
+
+        .service-toggle.open {
+            transform: rotate(180deg);
+        }
+
+        .service-content {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease, opacity 0.3s ease;
+            opacity: 1;
+        }
+
+        .service-content.collapsed {
+            max-height: 0;
+            opacity: 0;
+        }
+
+        .service-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #e0e0e0;
+            margin-top: 12px;
+            font-size: 14px;
+        }
+
+        .service-item:last-child {
+            border-bottom: none;
+        }
+
+        .service-name {
+            color: #555555;
+        }
+
+        .service-price {
+            background: #2563eb;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-weight: 600;
+            white-space: nowrap;
+            margin-left: 15px;
+            font-size: 13px;
+        }
+
+        .combo-offer {
+            background: #e8f0fe;
+            border: 1px solid #c5d9f1;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .combo-offer h3 {
+            color: #2563eb;
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .combo-offer p {
+            color: #555555;
+            font-size: 14px;
+        }
+
+        .disclaimer {
+            background: #fef3cd;
+            border-left: 3px solid #ff9800;
+            padding: 15px;
+            margin: 50px 0;
+            border-radius: 6px;
+        }
+
+        .disclaimer strong {
+            color: #ff9800;
+        }
+
+        .disclaimer p {
+            color: #333333;
+            margin-top: 8px;
+            font-size: 14px;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0);
+            transition: background-color 0.3s;
+        }
+
+        .modal.active {
+            display: block;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .modal-content {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            margin: 40px auto;
+            padding: 35px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 550px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15);
+            max-height: 80vh;
+            overflow-y: auto;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .form-group {
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: #333333;
+            font-size: 14px;
+        }
+
+        input, textarea, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 14px;
+            background: #ffffff;
+            color: #333333;
+            transition: all 0.3s;
+        }
+
+        input::placeholder, textarea::placeholder {
+            color: #999999;
+        }
+
+        input:focus, textarea:focus, select:focus {
+            outline: none;
+            border-color: #2563eb;
+            background: #f8f9fa;
+            box-shadow: 0 0 12px rgba(37, 99, 235, 0.15);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+
+        .form-button {
+            width: 100%;
+            background: #2563eb;
+            color: white;
+            padding: 11px;
+            border: none;
+            border-radius: 6px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .form-button:hover {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+        }
+
+        .close-btn {
+            background: none;
+            color: #333333;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            float: right;
+            transition: color 0.3s;
+        }
+
+        .close-btn:hover {
+            color: #2563eb;
+        }
+
+        footer {
+            background: #f8f9fa;
+            color: #666666;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 80px;
+            font-size: 14px;
+        }
+
+        @media (max-width: 768px) {
+            .hamburger {
+                display: flex;
+            }
+
+            nav {
+                display: none;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                flex-direction: column;
+                gap: 15px;
+                background: #ffffff;
+                padding: 20px;
+                box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            }
+
+            nav.active {
+                display: flex;
+            }
+
+            nav a {
+                padding: 10px 0;
+                border-bottom: 1px solid #e0e0e0;
+            }
+
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .service-item {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .service-price {
+                margin-left: 0;
+                margin-top: 10px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <a href="#" class="logo">ezTasq</a>
+                <nav id="nav-menu">
+                    <a id="about-btn">About</a>
+                    <a href="#services">Services</a>
+                    <a id="order-btn">Order</a>
+                </nav>
+                <div class="hamburger" id="hamburger">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>ezTasq</h1>
+            <p class="hero-subtitle">Student-Focused Academic Support</p>
+            <p class="hero-desc">Quick, reliable, and affordable academic assistance. 100% online.</p>
+            <a id="cta-button" class="cta-button">Place an Order</a>
+        </div>
+    </section>
+
+    <section class="services-section" id="services">
+        <div class="container">
+            <h2 class="section-title">Services & Pricing</h2>
+
+            <div class="service-category">
+                <div class="service-category-header">
+                    <h2>File & Assignment Services</h2>
+                    <span class="service-toggle">▼</span>
+                </div>
+                <div class="service-content">
+                    <div class="service-item">
+                        <span class="service-name">Image to PDF</span>
+                        <span class="service-price">Free</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="service-name">Image to OCR PDF</span>
+                        <span class="service-price">₹5/page</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="service-name">Handwritten to PDF</span>
+                        <span class="service-price">₹9/page</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="service-name">Same-day delivery</span>
+                        <span class="service-price">+₹10</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="service-category">
+                <div class="service-category-header">
+                    <h2>Project Assistance</h2>
+                    <span class="service-toggle">▼</span>
+                </div>
+                <div class="service-content">
+                    <div class="service-item">
+                        <span class="service-name">Basic Project</span>
+                        <span class="service-price">₹79</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="service-name">Project Report (6+ pages)</span>
+                        <span class="service-price">₹39</span>
+                    </div>
+                    <div class="service-item">
+                        <span class="service-name">Presentation (PPT)</span>
+                        <span class="service-price">₹29</span>
+                    </div>
+                    <div class="combo-offer">
+                        <h3>🎯 Combo Offer</h3>
+                        <p>Project + Report + PPT</p>
+                        <p style="font-size: 16px; color: #2563eb; font-weight: bold;">Flat ₹99</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="disclaimer">
+                <strong>⚠️ Important:</strong>
+                <p>All services are for learning and guidance purposes only.</p>
+            </div>
+        </div>
+    </section>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn" id="close-form">✕</button>
+            <div style="clear: both;"></div>
+            <h2 class="section-title" style="margin-bottom: 30px;">Place Your Order</h2>
+            
+            <form>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone</label>
+                    <input type="tel" id="phone">
+                </div>
+                <div class="form-group">
+                    <label for="service">Service</label>
+                    <select id="service" required>
+                        <option value="">Select a service</option>
+                        <option value="image-to-pdf">Image to PDF</option>
+                        <option value="project">Basic Project</option>
+                        <option value="combo">Combo Offer</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="description">Details</label>
+                    <textarea id="description" placeholder="Describe your requirements..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="deadline">Deadline</label>
+                    <input type="date" id="deadline">
+                </div>
+                <button type="submit" class="form-button">Submit Order</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 ezTasq. All rights reserved.</p>
+        <p>100% Online | Student-Focused Academic Support</p>
+    </footer>
+
+    <script>
+        const hamburger = document.getElementById('hamburger');
+        const navMenu = document.getElementById('nav-menu');
+        const orderModal = document.getElementById('orderModal');
+
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        document.getElementById('about-btn').addEventListener('click', () => {
+            window.location.href = 'about.html';
+        });
+
+        document.getElementById('order-btn').addEventListener('click', () => {
+            orderModal.classList.add('active');
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        });
+
+        document.getElementById('cta-button').addEventListener('click', () => {
+            orderModal.classList.add('active');
+        });
+
+        document.getElementById('close-form').addEventListener('click', () => {
+            orderModal.classList.remove('active');
+        });
+
+        window.addEventListener('click', (e) => {
+            if (e.target === orderModal) orderModal.classList.remove('active');
+        });
+
+        document.querySelectorAll('.service-category-header').forEach(header => {
+            header.addEventListener('click', () => {
+                const content = header.parentElement.querySelector('.service-content');
+                const toggle = header.querySelector('.service-toggle');
+                content.classList.toggle('collapsed');
+                toggle.classList.toggle('open');
+            });
+        });
+    </script>
+</body>
+</html>
