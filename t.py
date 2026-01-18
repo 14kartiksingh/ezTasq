@@ -3,8 +3,8 @@ import json
 from datetime import datetime
 
 # 🔐 CONFIG
-TOKEN = "5946547499:AAGq-EzZfjl-WUJP3C41EV0bq-NYyGbk4HU"
-OWNER_ID = 1708011472  # <-- PUT YOUR TELEGRAM USER ID HERE
+TOKEN = "
+OWNER_ID =  # <-- PUT YOUR TELEGRAM USER ID HERE
 DATA_FILE = "expenses.json"
 
 # ------------------ UTILS ------------------
